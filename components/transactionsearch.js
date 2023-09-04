@@ -6,6 +6,7 @@ import axios from "axios";
 const TransactionSearch = () => {
   const [myAddress, setMyAddress] = useState("");
   const [addressFilter, setAddressFilter] = useState("");
+  const [minValue, setMinValue] = useState("");
   const [result, setResult] = useState(null);
   const [loading, setLoading] = useState(false);
 
@@ -16,10 +17,10 @@ const TransactionSearch = () => {
       const response = await axios.post("/api/searchtransactions", {
         my_address: myAddress,
         address_filter: addressFilter,
+        min_value: minValue,
       });
       setResult(response.data);
     } catch (error) {
-      console.error("Error:", error);
       setResult({ error: "Invalid input" });
     } finally {
       setLoading(false);
@@ -34,12 +35,21 @@ const TransactionSearch = () => {
         value={myAddress}
         onChange={(e) => setMyAddress(e.target.value)}
       />
+      <br />
       <input
         type="text"
         placeholder="Enter address filter"
         value={addressFilter}
         onChange={(e) => setAddressFilter(e.target.value)}
       />
+      <br />
+      <input
+        type="text"
+        placeholder="Enter min txn value"
+        value={minValue}
+        onChange={(e) => setMinValue(e.target.value)}
+      />
+      <br />
       <button onClick={handleSearch}>Search</button>
       {loading && <p>Loading...</p>}
 

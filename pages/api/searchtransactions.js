@@ -1,7 +1,7 @@
 import axios from "axios";
 
 export default async (req, res) => {
-  const { my_address, address_filter, min_value } = req.body;
+  const { my_address, address_filter, min_value, max_value, min_gas, max_gas } = req.body;
 
   try {
     const response = await axios.get("https://api.etherscan.io/api", {
@@ -23,9 +23,15 @@ export default async (req, res) => {
           address_filter.includes(tx.from.toLowerCase())
         : true;
 
-      const minValueMatch = min_value ? tx.value >= min_value : true;
+      const minValueMatch = min_value ? BigInt(tx.value) >= BigInt(min_value) : true;
 
-      return addressMatch && minValueMatch;
+      const maxValueMatch = max_value ? BigInt(tx.value) <= BigInt(max_value): true;
+
+      const minGasMatch = min_gas ? BigInt(tx.gasPrice) * BigInt(tx.gasUsed) >= min_gas: true;
+
+      const maxGasMatch = max_gas ? BigInt(tx.gasPrice) * BigInt(tx.gasUsed) <= max_gas: true;
+
+      return addressMatch && minValueMatch && maxValueMatch && minGasMatch && maxGasMatch;
     });
 
     res.status(200).json({ filteredTransactions });

@@ -34,7 +34,7 @@ export default async (req, res) => {
       return addressMatch && minValueMatch && maxValueMatch && minGasMatch && maxGasMatch;
     });
 
-    res.status(200).json({ data: filteredTransactions.length });
+    res.status(200).json({ count: filteredTransactions.length, filteredTransactions });
   } catch (error) {
     res.status(500).json({ error: "Failed to fetch transactions." });
   }

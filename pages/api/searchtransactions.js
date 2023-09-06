@@ -11,13 +11,24 @@ export default async (req, res) => {
     max_gas,
     status,
     contract_creation,
+    transaction_type, // New parameter
   } = req.body;
+
+  let action = "txlist";
+
+  if (transaction_type === "ERC-20") {
+    action = "tokentx";
+  } else if (transaction_type === "ERC-721") {
+    action = "tokennfttx";
+  } else if (transaction_type === "ERC-1155") {
+    action = "token1155tx";
+  }
 
   try {
     const response = await axios.get("https://api.etherscan.io/api", {
       params: {
         module: "account",
-        action: "txlist",
+        action: action,
         address: my_address.toLowerCase(),
         startblock: 0,
         sort: "desc",

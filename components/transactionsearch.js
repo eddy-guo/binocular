@@ -12,6 +12,7 @@ const TransactionSearch = () => {
   const [maxGas, setMaxGas] = useState("");
   const [txnStatus, setTxnStatus] = useState("");
   const [contractCreation, setContractCreation] = useState("");
+  const [transactionType, setTransactionType] = useState("ethereum");
 
   const [result, setResult] = useState(null);
   const [loading, setLoading] = useState(false);
@@ -29,6 +30,7 @@ const TransactionSearch = () => {
         max_gas: maxGas,
         status: txnStatus,
         contract_creation: contractCreation,
+        transaction_type: transactionType,
       });
       setResult(response.data);
     } catch (error) {
@@ -47,6 +49,16 @@ const TransactionSearch = () => {
         value={myAddress}
         onChange={(e) => setMyAddress(e.target.value)}
       />
+      <br />
+      <select
+        value={transactionType}
+        onChange={(e) => setTransactionType(e.target.value)}
+      >
+        <option value="ethereum">Ethereum Transactions</option>
+        <option value="ERC-20">ERC-20 Token Transfers</option>
+        <option value="ERC-721">ERC-721 Token Transfers</option>
+        <option value="ERC-1155">ERC-1155 Token Transfers</option>
+      </select>
       <br />
       <input
         type="text"
@@ -84,14 +96,21 @@ const TransactionSearch = () => {
       />
       <br />
       <select value={txnStatus} onChange={(e) => setTxnStatus(e.target.value)}>
-        <option value="" disabled>Filter by Status</option>
+        <option value="" disabled>
+          Filter by Status
+        </option>
         <option value="both">Any</option>
         <option value="0">Successful</option>
         <option value="1">Failed</option>
       </select>
       <br />
-      <select value={contractCreation} onChange={(e) => setContractCreation(e.target.value)}>
-        <option value="" disabled>Filter by Contract Creation</option>
+      <select
+        value={contractCreation}
+        onChange={(e) => setContractCreation(e.target.value)}
+      >
+        <option value="" disabled>
+          Filter by Contract Creation
+        </option>
         <option value="both">Any</option>
         <option value="true">Contract Created</option>
         <option value="false">No Contract Created</option>

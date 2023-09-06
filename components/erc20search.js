@@ -3,15 +3,15 @@
 import { useState } from "react";
 import axios from "axios";
 
-const TransactionSearch = () => {
+const ERC20Search = () => {
   const [myAddress, setMyAddress] = useState("");
-  const [addressFilter, setAddressFilter] = useState("");
   const [minValue, setMinValue] = useState("");
   const [maxValue, setMaxValue] = useState("");
   const [minGas, setMinGas] = useState("");
   const [maxGas, setMaxGas] = useState("");
-  const [txnStatus, setTxnStatus] = useState("");
-  const [contractCreation, setContractCreation] = useState("");
+  const [tokenName, setTokenName] = useState("");
+  const [tokenSymbol, setTokenSymbol] = useState("");
+  const [contractAddress, setContractAddress] = useState("");
 
   const [result, setResult] = useState(null);
   const [loading, setLoading] = useState(false);
@@ -20,15 +20,15 @@ const TransactionSearch = () => {
     setLoading(true);
     setResult();
     try {
-      const response = await axios.post("/api/ethereum", {
+      const response = await axios.post("/api/erc20", {
         my_address: myAddress,
-        address_filter: addressFilter,
         min_value: minValue,
         max_value: maxValue,
         min_gas: minGas,
         max_gas: maxGas,
-        status: txnStatus,
-        contract_creation: contractCreation,
+        token_name: tokenName,
+        token_symbol: tokenSymbol,
+        contract_address: contractAddress,
       });
       setResult(response.data);
     } catch (error) {
@@ -43,17 +43,9 @@ const TransactionSearch = () => {
     <div>
       <input
         type="text"
-        name="ethereum"
         placeholder="Your Address"
         value={myAddress}
         onChange={(e) => setMyAddress(e.target.value)}
-      />
-      <br />
-      <input
-        type="text"
-        placeholder="Address Filter"
-        value={addressFilter}
-        onChange={(e) => setAddressFilter(e.target.value)}
       />
       <br />
       <input
@@ -84,26 +76,26 @@ const TransactionSearch = () => {
         onChange={(e) => setMaxGas(e.target.value)}
       />
       <br />
-      <select value={txnStatus} onChange={(e) => setTxnStatus(e.target.value)}>
-        <option value="" disabled>
-          Filter by Status
-        </option>
-        <option value="both">Any</option>
-        <option value="0">Successful</option>
-        <option value="1">Failed</option>
-      </select>
+      <input
+        type="text"
+        placeholder="Token Name"
+        value={tokenName}
+        onChange={(e) => setTokenName(e.target.value)}
+      />
       <br />
-      <select
-        value={contractCreation}
-        onChange={(e) => setContractCreation(e.target.value)}
-      >
-        <option value="" disabled>
-          Filter by Contract Creation
-        </option>
-        <option value="both">Any</option>
-        <option value="true">Contract Created</option>
-        <option value="false">No Contract Created</option>
-      </select>
+      <input
+        type="text"
+        placeholder="Token Symbol"
+        value={tokenSymbol}
+        onChange={(e) => setTokenSymbol(e.target.value)}
+      />
+      <br />
+      <input
+        type="text"
+        placeholder="Contract Address"
+        value={contractAddress}
+        onChange={(e) => setContractAddress(e.target.value)}
+      />
       <br />
       <button onClick={handleSearch}>Search</button>
       {loading && <p>Loading...</p>}
@@ -113,4 +105,4 @@ const TransactionSearch = () => {
   );
 };
 
-export default TransactionSearch;
+export default ERC20Search;

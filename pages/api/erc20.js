@@ -4,31 +4,20 @@ import Web3 from "web3";
 export default async (req, res) => {
   const {
     my_address,
-    address_filter,
     min_value,
     max_value,
     min_gas,
     max_gas,
-    status,
-    contract_creation,
-    transaction_type, // New parameter
+    token_name,
+    token_symbol,
+    contract_address,
   } = req.body;
-
-  let action = "txlist";
-
-  if (transaction_type === "ERC-20") {
-    action = "tokentx";
-  } else if (transaction_type === "ERC-721") {
-    action = "tokennfttx";
-  } else if (transaction_type === "ERC-1155") {
-    action = "token1155tx";
-  }
 
   try {
     const response = await axios.get("https://api.etherscan.io/api", {
       params: {
         module: "account",
-        action: action,
+        action: "tokentx",
         address: my_address.toLowerCase(),
         startblock: 0,
         sort: "desc",
@@ -39,11 +28,6 @@ export default async (req, res) => {
     const transactions = response.data.result;
 
     const filteredTransactions = transactions.filter((tx) => {
-      const addressMatch = address_filter
-        ? address_filter.includes(tx.to.toLowerCase()) ||
-          address_filter.includes(tx.from.toLowerCase())
-        : true;
-
       const minValueMatch = min_value
         ? BigInt(tx.value) >= Web3.utils.toWei(min_value, "ether")
         : true;
@@ -62,24 +46,24 @@ export default async (req, res) => {
           Web3.utils.toWei(max_gas, "ether")
         : true;
 
-      const statusMatch =
-        status === "0" || status === "1" ? tx.isError == status : true;
+      const tokenNameMatch = token_name ? tx.tokenName == token_name : true;
 
-      const contractMatch =
-        contract_creation === "true"
-          ? !!tx.contractAddress
-          : contract_creation === "false"
-          ? !tx.contractAddress
-          : true;
+      const tokenSymbolMatch = token_symbol
+        ? tx.tokenSymbol == token_symbol
+        : true;
+
+      const contractAddressMatch = contract_address
+        ? tx.contractAddress == contract_address
+        : true;
 
       return (
-        addressMatch &&
         minValueMatch &&
         maxValueMatch &&
         minGasMatch &&
         maxGasMatch &&
-        statusMatch &&
-        contractMatch
+        tokenNameMatch &&
+        tokenSymbolMatch &&
+        contractAddressMatch
       );
     });
 

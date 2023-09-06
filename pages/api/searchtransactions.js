@@ -2,7 +2,7 @@ import axios from "axios";
 import Web3 from "web3";
 
 export default async (req, res) => {
-  const { my_address, address_filter, min_value, max_value, min_gas, max_gas } = req.body;
+  const { my_address, address_filter, min_value, max_value, min_gas, max_gas, status, contract_creation } = req.body;
 
   try {
     const response = await axios.get("https://api.etherscan.io/api", {
@@ -32,7 +32,11 @@ export default async (req, res) => {
 
       const maxGasMatch = max_gas ? BigInt(tx.gasPrice) * BigInt(tx.gasUsed) <= Web3.utils.toWei(max_gas, 'ether'): true;
 
-      return addressMatch && minValueMatch && maxValueMatch && minGasMatch && maxGasMatch;
+      const statusMatch = (status === "0" || status === "1") ? tx.isError == status : true;
+
+      const contractMatch = (contract_creation === "true" ? !!tx.contractAddress : (contract_creation === "false" ? !tx.contractAddress : true));
+      
+      return addressMatch && minValueMatch && maxValueMatch && minGasMatch && maxGasMatch && statusMatch && contractMatch;
     });
 
     res.status(200).json({ count: filteredTransactions.length, filteredTransactions });

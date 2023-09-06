@@ -43,58 +43,58 @@ const TransactionSearch = () => {
     <div>
       <input
         type="text"
-        placeholder="Enter your address"
+        placeholder="Your Address"
         value={myAddress}
         onChange={(e) => setMyAddress(e.target.value)}
       />
       <br />
       <input
         type="text"
-        placeholder="Enter address filter"
+        placeholder="Address Filter"
         value={addressFilter}
         onChange={(e) => setAddressFilter(e.target.value)}
       />
       <br />
       <input
         type="text"
-        placeholder="Enter min txn value"
+        placeholder="Min Value"
         value={minValue}
         onChange={(e) => setMinValue(e.target.value)}
       />
       <br />
       <input
         type="text"
-        placeholder="Enter max txn value"
+        placeholder="Max Value"
         value={maxValue}
         onChange={(e) => setMaxValue(e.target.value)}
       />
       <br />
       <input
         type="text"
-        placeholder="Enter min gas"
+        placeholder="Min Gas"
         value={minGas}
         onChange={(e) => setMinGas(e.target.value)}
       />
       <br />
       <input
         type="text"
-        placeholder="Enter max gas"
+        placeholder="Max Gas"
         value={maxGas}
         onChange={(e) => setMaxGas(e.target.value)}
       />
       <br />
       <select value={txnStatus} onChange={(e) => setTxnStatus(e.target.value)}>
-        <option value="" disabled>Select Transaction Status</option>
-        <option value="both">All</option>
+        <option value="" disabled>Filter by Status</option>
+        <option value="both">Any</option>
         <option value="0">Successful</option>
         <option value="1">Failed</option>
       </select>
       <br />
       <select value={contractCreation} onChange={(e) => setContractCreation(e.target.value)}>
-        <option value="" disabled>Select Contract Creation</option>
-        <option value="both">All</option>
-        <option value="true">Created Contract</option>
-        <option value="false">Not Created Contract</option>
+        <option value="" disabled>Filter by Contract Creation</option>
+        <option value="both">Any</option>
+        <option value="true">Contract Created</option>
+        <option value="false">No Contract Created</option>
       </select>
       <br />
       <button onClick={handleSearch}>Search</button>

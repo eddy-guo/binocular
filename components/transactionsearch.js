@@ -28,6 +28,7 @@ const TransactionSearch = () => {
       });
       setResult(response.data);
     } catch (error) {
+      console.log(error)
       setResult({ error: "Invalid input" });
     } finally {
       setLoading(false);

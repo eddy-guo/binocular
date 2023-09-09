@@ -1,27 +1,56 @@
+"use client";
+
 import TransactionSearch from "../components/transactionsearch";
 import ERC20Search from "../components/erc20search";
 import ERC721Search from "../components/erc721search";
 import ERC1155Search from "../components/erc1155search";
-
+import { useState } from "react";
 
 export default function Home() {
+  const [temp, setTemp] = useState("");
+
   return (
     <>
+      <select value={temp} onChange={(e) => setTemp(e.target.value)}>
+        <option value="" disabled>
+          Select Transaction Search Type
+        </option>
+        <option value="eth">Ethereum</option>
+        <option value="erc20">ERC20</option>
+        <option value="erc721">ERC721</option>
+        <option value="erc1155">ERC1155</option>
+      </select>
       <div>
-        <h1>Transaction Search</h1>
-        <TransactionSearch />
+        {temp == "eth" && (
+          <>
+            <h1>Ethereum Search</h1>
+            <TransactionSearch />
+          </>
+        )}
       </div>
       <div>
-        <h1>ERC20 Search</h1>
-        <ERC20Search />
+        {temp == "erc20" && (
+          <>
+            <h1>ERC20 Search</h1>
+            <ERC20Search />
+          </>
+        )}
       </div>
       <div>
-        <h1>ERC721 Search</h1>
-        <ERC721Search />
+        {temp == "erc721" && (
+          <>
+            <h1>ERC721 Search</h1>
+            <ERC721Search />
+          </>
+        )}
       </div>
       <div>
-        <h1>ERC1155 Search</h1>
-        <ERC1155Search />
+        {temp == "erc1155" && (
+          <>
+            <h1>ERC1155 Search</h1>
+            <ERC1155Search />
+          </>
+        )}
       </div>
     </>
   );
@@ -34,6 +63,5 @@ export default function Home() {
 // From/To - be able to search from "from", "to", or both
 
 // NEXT UP
-// conditional rendering
 // blocknumber (similar to date, but do min/max)
 // HARD: events/event logs, contract specific calls/methods, date (implement calendar)

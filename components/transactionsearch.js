@@ -10,6 +10,8 @@ const TransactionSearch = () => {
   const [maxValue, setMaxValue] = useState("");
   const [minGas, setMinGas] = useState("");
   const [maxGas, setMaxGas] = useState("");
+  const [startBlock, setStartBlock] = useState("");
+  const [endBlock, setEndBlock] = useState("");
   const [txnStatus, setTxnStatus] = useState("");
   const [contractCreation, setContractCreation] = useState("");
 
@@ -27,6 +29,8 @@ const TransactionSearch = () => {
         max_value: maxValue,
         min_gas: minGas,
         max_gas: maxGas,
+        start_block: startBlock,
+        end_block: endBlock,
         status: txnStatus,
         contract_creation: contractCreation,
       });
@@ -82,6 +86,20 @@ const TransactionSearch = () => {
         placeholder="Max Gas"
         value={maxGas}
         onChange={(e) => setMaxGas(e.target.value)}
+      />
+      <br />
+      <input
+        type="text"
+        placeholder="Start Block"
+        value={startBlock}
+        onChange={(e) => setStartBlock(e.target.value)}
+      />
+      <br />
+      <input
+        type="text"
+        placeholder="End Block"
+        value={endBlock}
+        onChange={(e) => setEndBlock(e.target.value)}
       />
       <br />
       <select value={txnStatus} onChange={(e) => setTxnStatus(e.target.value)}>

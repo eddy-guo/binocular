@@ -9,6 +9,8 @@ export default async (req, res) => {
     max_value,
     min_gas,
     max_gas,
+    start_block,
+    end_block,
     status,
     contract_creation,
   } = req.body;
@@ -19,7 +21,8 @@ export default async (req, res) => {
         module: "account",
         action: "txlist",
         address: my_address.toLowerCase(),
-        startblock: 0,
+        startblock: start_block,
+        endblock: end_block,
         sort: "desc",
         apikey: process.env.ETHERSCAN_KEY,
       },

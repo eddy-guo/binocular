@@ -7,6 +7,8 @@ const ERC1155Search = () => {
   const [myAddress, setMyAddress] = useState("");
   const [minGas, setMinGas] = useState("");
   const [maxGas, setMaxGas] = useState("");
+  const [startBlock, setStartBlock] = useState("");
+  const [endBlock, setEndBlock] = useState("");
   const [tokenId, setTokenId] = useState("");
   const [tokenName, setTokenName] = useState("");
   const [tokenSymbol, setTokenSymbol] = useState("");
@@ -23,6 +25,8 @@ const ERC1155Search = () => {
         my_address: myAddress,
         min_gas: minGas,
         max_gas: maxGas,
+        start_block: startBlock,
+        end_block: endBlock,
         token_id: tokenId,
         token_name: tokenName,
         token_symbol: tokenSymbol,
@@ -58,6 +62,20 @@ const ERC1155Search = () => {
         placeholder="Max Gas"
         value={maxGas}
         onChange={(e) => setMaxGas(e.target.value)}
+      />
+      <br />
+      <input
+        type="text"
+        placeholder="Start Block"
+        value={startBlock}
+        onChange={(e) => setStartBlock(e.target.value)}
+      />
+      <br />
+      <input
+        type="text"
+        placeholder="End Block"
+        value={endBlock}
+        onChange={(e) => setEndBlock(e.target.value)}
       />
       <br />
       <input

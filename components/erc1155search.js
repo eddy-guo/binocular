@@ -45,6 +45,7 @@ const ERC1155Search = () => {
     <div>
       <input
         type="text"
+        name="erc1155"
         placeholder="Your Address"
         value={myAddress}
         onChange={(e) => setMyAddress(e.target.value)}
